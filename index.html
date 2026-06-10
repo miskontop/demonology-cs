@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roblox Demonology Cheat Sheet</title>
     <style>
+        /* Definizione delle variabili di design e palette colori a tema sci-fi dark */
         :root {
             --bg-color: #0d0f12;
             --card-bg: #161a22;
@@ -16,6 +17,7 @@
             --state-excluded: #da3633;
             --border-color: #30363d;
             --highlight-gold: #f1c40f;
+            --slider-track: #21262d;
         }
 
         * {
@@ -33,7 +35,7 @@
             position: relative;
         }
 
-        /* Concealed Minimal Header Toggle */
+        /* Interruttore minimale nascosto per collassare l'intestazione */
         .header-toggle-btn {
             position: absolute;
             top: 12px;
@@ -49,12 +51,8 @@
             padding: 5px;
         }
 
-        .header-toggle-btn:hover {
-            opacity: 0.9;
-            transform: scale(1.1);
-        }
+        .header-toggle-btn:hover { opacity: 0.9; transform: scale(1.1); }
 
-        /* Animated Header Section */
         header {
             text-align: center;
             max-height: 150px;
@@ -63,31 +61,12 @@
             margin-bottom: 20px;
             padding-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                        opacity 0.3s ease, 
-                        margin 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                        padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.4s, padding 0.4s;
         }
 
-        header.hidden {
-            max-height: 0;
-            opacity: 0;
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom-color: transparent;
-        }
-
-        header h1 {
-            color: var(--text-main);
-            font-size: 2.5rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        header p {
-            color: var(--text-muted);
-            margin-top: 5px;
-        }
+        header.hidden { max-height: 0; opacity: 0; margin-bottom: 0; padding-bottom: 0; border-bottom-color: transparent; }
+        header h1 { color: var(--text-main); font-size: 2.5rem; letter-spacing: 1px; text-transform: uppercase; }
+        header p { color: var(--text-muted); margin-top: 5px; }
 
         .container {
             max-width: 1400px;
@@ -95,20 +74,13 @@
             display: grid;
             grid-template-columns: 320px 1fr;
             gap: 30px;
-            transition: grid-template-columns 0.3s ease;
         }
 
         @media (max-width: 992px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-            .evidence-panel {
-                position: relative !important;
-                top: 0 !important;
-            }
+            .container { grid-template-columns: 1fr; }
+            .evidence-panel { position: relative !important; top: 0 !important; }
         }
 
-        /* Evidence Panel Styles */
         .evidence-panel {
             background-color: var(--card-bg);
             padding: 20px;
@@ -131,13 +103,8 @@
             padding-bottom: 5px;
         }
 
-        .panel-title {
-            font-size: 1.2rem;
-            color: var(--text-main);
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
+        .panel-title { font-size: 1.2rem; color: var(--text-main); text-transform: uppercase; font-weight: bold; }
+        
         .gear-btn {
             background: none;
             border: none;
@@ -148,18 +115,10 @@
             display: flex;
             align-items: center;
         }
+        .gear-btn:hover { color: var(--text-main); transform: rotate(60deg); }
+        .gear-btn.active { color: var(--highlight-gold); transform: rotate(120deg); }
 
-        .gear-btn:hover {
-            color: var(--text-main);
-            transform: rotate(60deg);
-        }
-
-        .gear-btn.active {
-            color: var(--highlight-gold);
-            transform: rotate(120deg);
-        }
-
-        /* Animated Settings Drawer Panel */
+        /* Cassetto delle impostazioni con prevenzione di interazioni quando chiuso */
         .settings-drawer {
             background-color: #0d0f12;
             border: 1px solid transparent;
@@ -167,291 +126,352 @@
             padding: 0 15px;
             max-height: 0;
             opacity: 0;
-            overflow: hidden;
+            overflow: visible; 
+            pointer-events: none;
+            visibility: hidden;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
-                        opacity 0.25s ease, 
-                        padding 0.35s ease,
-                        border-color 0.35s ease;
+            gap: 15px;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, padding 0.35s ease, border-color 0.35s ease, visibility 0.35s;
         }
 
-        .settings-drawer.open {
-            max-height: 350px;
-            opacity: 1;
-            padding: 15px;
-            border-color: var(--border-color);
+        .settings-drawer.open { 
+            max-height: 455px; 
+            opacity: 1; 
+            padding: 15px; 
+            border-color: var(--border-color); 
+            pointer-events: auto;
+            visibility: visible;
         }
 
-        .setting-item {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
+        .setting-item { display: flex; flex-direction: column; gap: 6px; position: relative;}
+        .setting-item label { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        .setting-item label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .setting-item select {
-            background: var(--state-neutral);
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            padding: 6px;
-            border-radius: 4px;
-            outline: none;
-            cursor: pointer;
-        }
-
+        /* Checkbox Premium personalizzati e allineati */
         .toggle-label {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-size: 0.85rem;
             color: var(--text-main);
             cursor: pointer;
             user-select: none;
         }
 
-        .toggle-label input {
+        .toggle-label input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            background-color: var(--state-neutral);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            accent-color: var(--state-included);
-            width: 16px;
-            height: 16px;
+            transition: all 0.2s ease;
         }
 
-        /* Evidence Clues Grid Matrix */
-        .evidence-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-            transition: grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .toggle-label input[type="checkbox"]:hover { border-color: var(--text-muted); }
+        .toggle-label input[type="checkbox"]:checked { background-color: var(--state-included); border-color: #3fb950; }
+
+        .toggle-label input[type="checkbox"]::before {
+            content: "✓";
+            font-size: 11px;
+            color: #fff;
+            font-weight: bold;
+            transform: scale(0);
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .evidence-grid.two-columns {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
+        .toggle-label input[type="checkbox"]:checked::before { transform: scale(1); }
+
+        /* Contenitore e decorazione avanzata dello Slider */
+        .slider-container { padding: 8px 0 12px 0; }
+        
+        .premium-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--slider-track);
+            outline: none;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: background 0.15s ease, border-color 0.3s ease;
         }
 
-        .evidence-btn {
+        .premium-slider:hover {
+            border-color: var(--text-muted);
+        }
+
+        /* Animazione pulsante per il cursore (thumb) dello slider */
+        @keyframes thumbPulse {
+            0% { box-shadow: 0 0 0 0 rgba(218, 54, 51, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(218, 54, 51, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(218, 54, 51, 0); }
+        }
+
+        /* Decorazione del cursore (Thumb) dello Slider */
+        .premium-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2.5px solid var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(218, 54, 51, 0.6);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .premium-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.3);
+            background: #ff4a47;
+            animation: thumbPulse 1.5s infinite ease-in-out;
+        }
+
+        .premium-slider::-webkit-slider-thumb:active {
+            transform: scale(1.1) rotate(15deg);
+            background: var(--highlight-gold);
+            box-shadow: 0 0 20px var(--highlight-gold);
+        }
+
+        .premium-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(218, 54, 51, 0.6);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .premium-slider::-moz-range-thumb:hover {
+            transform: scale(1.3);
+            background: #ff4a47;
+            animation: thumbPulse 1.5s infinite ease-in-out;
+        }
+
+        .premium-slider::-moz-range-thumb:active {
+            transform: scale(1.1) rotate(15deg);
+            background: var(--highlight-gold);
+            box-shadow: 0 0 20px var(--highlight-gold);
+        }
+
+        /* Etichette dello Slider animate con transizione elastica */
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .slider-labels span {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .slider-labels span.active {
+            color: var(--highlight-gold);
+            background: rgba(241, 196, 15, 0.1);
+            transform: scale(1.25);
+            box-shadow: 0 0 8px rgba(241, 196, 15, 0.15);
+            font-weight: bold;
+        }
+
+        /* Menu Dropdown 100% Custom */
+        .custom-select-wrapper { position: relative; user-select: none; }
+
+        .custom-select-trigger {
             background-color: var(--state-neutral);
             color: var(--text-main);
             border: 1px solid var(--border-color);
-            padding: 12px;
+            padding: 8px 12px;
             border-radius: 6px;
             cursor: pointer;
-            font-weight: 600;
-            text-align: left;
-            transition: all 0.2s ease, transform 0.1s ease;
+            font-size: 0.85rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
+            font-weight: 500;
+            transition: border-color 0.2s, background-color 0.2s;
         }
 
-        .evidence-grid.two-columns .evidence-btn {
-            padding: 10px 8px;
-            font-size: 0.78rem;
+        .custom-select-wrapper:hover .custom-select-trigger { border-color: var(--text-muted); background-color: #262c36; }
+        
+        .custom-select-trigger::after {
+            content: ""; width: 0; height: 0;
+            border-left: 5px solid transparent; border-right: 5px solid transparent;
+            border-top: 5px solid var(--text-muted); transition: transform 0.2s ease;
         }
 
-        .evidence-btn:active {
-            transform: scale(0.97);
+        .custom-select-wrapper.open .custom-select-trigger::after { transform: rotate(180deg); }
+
+        .custom-options-menu {
+            position: absolute; top: calc(100% + 5px); left: 0; right: 0;
+            background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5); opacity: 0; visibility: hidden; pointer-events: none;
+            transform: translateY(-10px); transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); z-index: 999; overflow: hidden;
         }
 
-        .evidence-btn.included {
-            background-color: var(--state-included);
-            border-color: #3fb950;
+        .custom-select-wrapper.open .custom-options-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+
+        .custom-option { padding: 10px 12px; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; transition: all 0.15s ease; }
+        .custom-option:hover { background-color: #21262d; color: var(--text-main); }
+        .custom-option.selected { background-color: rgba(88, 166, 255, 0.1); color: #58a6ff; font-weight: bold; }
+
+        /* Griglia Indizi con transizioni di trasformazione fluide */
+        .evidence-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 10px; 
+            transition: gap 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        .evidence-grid.two-columns { 
+            grid-template-columns: 1fr 1fr; 
+            gap: 8px; 
         }
 
+        .evidence-btn {
+            background-color: var(--state-neutral); color: var(--text-main); border: 1px solid var(--border-color);
+            padding: 12px; border-radius: 6px; cursor: pointer; font-weight: 600; text-align: left;
+            display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;
+            transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.1s ease;
+        }
+
+        .evidence-grid.two-columns .evidence-btn { padding: 10px 8px; font-size: 0.78rem; }
+        .evidence-btn:active { transform: scale(0.97); }
+        .evidence-btn.included { background-color: var(--state-included); border-color: #3fb950; }
         .evidence-btn.included::after { content: "✓"; }
-
-        .evidence-btn.excluded {
-            background-color: var(--state-excluded);
-            border-color: #f85149;
-            text-decoration: line-through;
-            opacity: 0.5;
-        }
-
+        .evidence-btn.excluded { background-color: var(--state-excluded); border-color: #f85149; text-decoration: line-through; opacity: 0.5; }
         .evidence-btn.excluded::after { content: "✕"; }
+        .evidence-btn.impossible { background-color: #12141a; color: #484f58; border-color: #21262d; text-decoration: line-through; opacity: 0.25; pointer-events: none; }
 
-        .evidence-btn.impossible {
-            background-color: #12141a;
-            color: #484f58;
-            border-color: #21262d;
-            text-decoration: line-through;
-            opacity: 0.25;
-            pointer-events: none;
-            cursor: not-allowed;
+        /* Animazione Cinematic Motion Blur per i Nomi Corti (Rimosso 'forwards' per evitare blocchi del FLIP) */
+        .blur-swap-active {
+            animation: textBlurGlance 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes textBlurGlance {
+            0% { filter: blur(0px); transform: scale(1); opacity: 1; }
+            45% { filter: blur(3.5px); transform: scale(0.97); opacity: 0.65; }
+            100% { filter: blur(0px); transform: scale(1); opacity: 1; }
         }
 
         .reset-btn {
-            width: 100%;
-            background-color: transparent;
-            color: var(--text-muted);
-            border: 1px dashed var(--border-color);
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.2s;
+            width: 100%; background-color: transparent; color: var(--text-muted); border: 1px dashed var(--border-color);
+            padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: all 0.2s;
         }
+        .reset-btn:hover { background-color: rgba(218, 54, 51, 0.1); color: #ff7b72; border-color: var(--primary); }
 
-        .reset-btn:hover {
-            background-color: rgba(218, 54, 51, 0.1);
-            color: #ff7b72;
-            border-color: var(--primary);
-        }
-
-        /* Ghost Main Dynamic Grid Layout */
-        .ghost-list {
-            display: grid;
-            gap: 20px;
-            align-content: start;
-        }
-
+        /* Lista dei Fantasmi */
+        .ghost-list { display: grid; gap: 20px; align-content: start; transition: grid-template-columns 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+        
         .ghost-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            position: relative;
-            /* Smooth item filter animations */
+            background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px;
+            position: relative; 
             transition: opacity 0.3s ease, 
-                        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
                         border-color 0.3s ease, 
                         box-shadow 0.3s ease, 
-                        filter 0.3s ease;
+                        filter 0.3s ease, 
+                        padding 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                        transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+                        background-color 0.3s ease;
         }
 
-        .ghost-card.faded {
-            opacity: 0.12;
-            pointer-events: none;
-            transform: scale(0.97);
-            filter: blur(0.5px);
-        }
-
-        .ghost-card.manually-excluded {
-            opacity: 0.08 !important;
-            filter: grayscale(1);
-            border-color: #484f58;
-            transform: scale(0.96);
-        }
-
-        .ghost-card.final-match {
-            border-color: var(--highlight-gold);
-            box-shadow: 0 0 18px rgba(241, 196, 15, 0.2);
-            background-color: rgba(241, 196, 15, 0.02);
-            transform: scale(1.02);
-        }
-
-        .ghost-header-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .ghost-name {
-            font-size: 1.3rem;
-            color: #ff7b72;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        .ghost-card.final-match .ghost-name {
-            color: var(--highlight-gold);
-        }
-
-        .ghost-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .action-exclude-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 1.1rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-            line-height: 1;
-        }
-
-        .action-exclude-btn:hover {
-            color: var(--primary);
-            background: rgba(218, 54, 51, 0.15);
-            transform: scale(1.15);
-        }
-
-        .ghost-card.manually-excluded .action-exclude-btn {
-            color: var(--highlight-gold);
-            transform: rotate(45deg);
-        }
-
-        .ghost-card.final-match .ghost-header-wrapper::after {
-            content: "IDENTIFIED";
-            font-size: 0.7rem;
-            background-color: var(--highlight-gold);
-            color: #0d0f12;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-
-        .ghost-evidence {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
-
-        .evidence-tag {
-            background-color: rgba(255, 255, 255, 0.05);
-            font-size: 0.72rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            transition: all 0.25s ease;
-        }
-
-        .evidence-tag.highlight {
-            color: #58a6ff;
-            border-color: #388bfd;
-            background-color: rgba(56, 139, 253, 0.15);
-            transform: translateY(-1px);
-        }
-
-        .traits {
-            font-size: 0.82rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 10px;
-        }
-
-        .trait-title {
-            font-weight: bold;
-            color: var(--text-main);
+        /* Animazioni di Cancellazione / Esclusione */
+        .ghost-card.faded { 
+            opacity: 0.12; 
+            pointer-events: none; 
+            transform: scale(0.95); 
+            filter: blur(0.5px) grayscale(0.8); 
         }
         
-        .trait-desc {
-            color: var(--text-muted);
-            margin-bottom: 5px;
+        .ghost-card.manually-excluded { 
+            opacity: 0.08 !important; 
+            filter: grayscale(1) blur(1px); 
+            border-color: #484f58; 
+            transform: scale(0.93); 
         }
 
-        /* Structuring View Profiling Layout Tweaks */
-        .ghost-list.view-compact .traits { display: none !important; }
-        .ghost-list.view-minimal .traits,
-        .ghost-list.view-minimal .ghost-evidence { display: none !important; }
+        /* Animazioni di Rivelazione (Identificato / Final Match) */
+        @keyframes finalReveal {
+            0% { transform: scale(1); box-shadow: 0 0 0 rgba(241, 196, 15, 0); }
+            50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(241, 196, 15, 0.5); }
+            100% { transform: scale(1.02); box-shadow: 0 0 18px rgba(241, 196, 15, 0.2); }
+        }
+        
+        @keyframes borderGlowPulse {
+            0% { box-shadow: 0 0 8px rgba(241, 196, 15, 0.15); border-color: rgba(241, 196, 15, 0.8); }
+            100% { box-shadow: 0 0 20px rgba(241, 196, 15, 0.45); border-color: rgba(241, 196, 15, 1); }
+        }
+
+        .ghost-card.final-match { 
+            border-color: var(--highlight-gold); 
+            background-color: rgba(241, 196, 15, 0.02);
+            animation: finalReveal 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards,
+                       borderGlowPulse 1.5s infinite alternate ease-in-out 0.5s;
+        }
+
+        .ghost-card.final-match .action-exclude-btn {
+            opacity: 0 !important; pointer-events: none !important; width: 0 !important; padding: 0 !important; margin: 0 !important; transform: scale(0);
+        }
+
+        .ghost-header-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .ghost-name { font-size: 1.3rem; color: #ff7b72; text-transform: uppercase; font-weight: bold; }
+        .ghost-card.final-match .ghost-name { color: var(--highlight-gold); }
+
+        .action-exclude-btn {
+            background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem;
+            padding: 2px 6px; border-radius: 4px; line-height: 1; transition: all 0.2s ease;
+        }
+        .action-exclude-btn:hover { color: var(--primary); background: rgba(218, 54, 51, 0.15); transform: scale(1.15); }
+
+        .ghost-card.final-match .ghost-header-wrapper::after {
+            content: "IDENTIFIED"; font-size: 0.7rem; background-color: var(--highlight-gold); color: #0d0f12;
+            padding: 2px 6px; border-radius: 4px; font-weight: bold; letter-spacing: 0.5px;
+        }
+
+        .ghost-evidence { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px; }
+        
+        .ghost-evidence, .traits {
+            max-height: 300px;
+            opacity: 1;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease, margin 0.35s ease, padding 0.35s ease, border-color 0.35s ease;
+        }
+        
+        .evidence-tag {
+            background-color: rgba(255, 255, 255, 0.05); font-size: 0.72rem; padding: 3px 8px; border-radius: 4px;
+            border: 1px solid var(--border-color); color: var(--text-muted); transition: color 0.25s ease, border-color 0.25s, background-color 0.25s, transform 0.25s;
+        }
+        .evidence-tag.highlight { color: #58a6ff; border-color: #388bfd; background-color: rgba(56, 139, 253, 0.15); transform: translateY(-1px); }
+
+        .traits { font-size: 0.82rem; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 10px; }
+        .trait-title { font-weight: bold; color: var(--text-main); }
+        .trait-desc { color: var(--text-muted); margin-bottom: 5px; }
+
+        .ghost-list.view-compact .traits {
+            max-height: 0; opacity: 0; padding-top: 0 !important; margin-top: 0 !important; border-top-color: transparent !important;
+        }
+        .ghost-list.view-minimal .traits {
+            max-height: 0; opacity: 0; padding-top: 0 !important; margin-top: 0 !important; border-top-color: transparent !important;
+        }
+        .ghost-list.view-minimal .ghost-evidence {
+            max-height: 0; opacity: 0; margin-bottom: 0 !important; padding-bottom: 0 !important;
+        }
         .ghost-list.view-minimal .ghost-card { padding: 12px 16px; }
-        .ghost-list.view-minimal .ghost-header-wrapper { margin-bottom: 0; }
     </style>
 </head>
 <body>
@@ -489,23 +509,31 @@
                         <span>Organize Clues in 2 Columns</span>
                     </label>
                 </div>
+                
                 <div class="setting-item">
-                    <label for="view-profile">Display Mode</label>
-                    <select id="view-profile">
-                        <option value="full" selected>Full Details</option>
-                        <option value="compact">Compact View (No Descriptions)</option>
-                        <option value="minimal">Essential View (Names Only)</option>
-                    </select>
+                    <label>Display Density Mode</label>
+                    <div class="custom-select-wrapper" id="view-profile-custom-select">
+                        <div class="custom-select-trigger" id="view-profile-trigger-text">Full Details</div>
+                        <div class="custom-options-menu">
+                            <div class="custom-option selected" data-value="full">Full Details</div>
+                            <div class="custom-option" data-value="compact">Compact View</div>
+                            <div class="custom-option" data-value="minimal">Essential View</div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="setting-item">
-                    <label for="grid-columns">Grid Columns Configuration</label>
-                    <select id="grid-columns">
-                        <option value="1">1 Column</option>
-                        <option value="2" selected>2 Columns</option>
-                        <option value="3">3 Columns</option>
-                        <option value="4">4 Columns</option>
-                        <option value="5">5 Columns</option>
-                    </select>
+                    <label>Grid Columns Configuration</label>
+                    <div class="slider-container">
+                        <input type="range" id="grid-columns-slider" class="premium-slider" min="1" max="5" value="2" step="1">
+                        <div class="slider-labels">
+                            <span id="col-lbl-1">1</span>
+                            <span id="col-lbl-2" class="active">2</span>
+                            <span id="col-lbl-3">3</span>
+                            <span id="col-lbl-4">4</span>
+                            <span id="col-lbl-5">5</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -524,11 +552,11 @@
         </aside>
 
         <main class="ghost-list" id="ghost-container">
-            </main>
+            <!-- Rendered programmatically via JS -->
+        </main>
     </div>
 
     <script>
-        // Official Wiki Source Data Structuring
         const ghosts = [
             { name: "Aswang", evidence: ["emf", "writing", "wither"], strength: "Speed increases every time they kill.", weakness: "Salt slows them. Only ghost with both Wither and Ghost Writing evidence." },
             { name: "Banshee", evidence: ["freezing", "ghost_orb", "handprints"], strength: "Can break multiple windows/mirrors at once.", weakness: "Can sometimes let out a unique wail at the start of its hunt." },
@@ -560,6 +588,8 @@
 
         let filterStates = { emf: 0, handprints: 0, spirit_box: 0, ghost_orb: 0, freezing: 0, writing: 0, projector: 0, wither: 0 };
         let manuallyExcludedGhosts = new Set();
+        let selectedColumnsCount = 2;
+        let currentDensityMode = "full";
 
         const ghostContainer = document.getElementById("ghost-container");
         const evidenceButtonsContainer = document.getElementById("evidence-buttons-container");
@@ -569,17 +599,22 @@
         const gearToggle = document.getElementById("gear-toggle");
         const settingsPanel = document.getElementById("settings-panel");
         
-        // Settings Elements
         const sortToggle = document.getElementById("sort-possible-toggle");
         const shortNamesToggle = document.getElementById("short-names-toggle");
         const cluesLayoutToggle = document.getElementById("clues-layout-toggle");
-        const viewProfileSelect = document.getElementById("view-profile");
-        const gridColumnsSelect = document.getElementById("grid-columns");
+        
+        const colSlider = document.getElementById("grid-columns-slider");
+        const colLabels = [
+            document.getElementById("col-lbl-1"), document.getElementById("col-lbl-2"),
+            document.getElementById("col-lbl-3"), document.getElementById("col-lbl-4"), document.getElementById("col-lbl-5")
+        ];
 
         function init() {
             renderGhosts();
             setupEventListeners();
-            applyGridColumns(); // Establish layout constraints from initialization state
+            setupCustomDropdown();
+            applyGridColumns();
+            updateSliderBackground();
         }
 
         function getActiveNomenclature() {
@@ -596,7 +631,7 @@
                 card.id = `ghost-${ghost.name}`;
 
                 const tagsHTML = ghost.evidence.map(ev => 
-                    `<span class="evidence-tag" data-ev-tag="${ev}">${currentNames[ev]}</span>`
+                    `<span class="evidence-tag blur-swap-active" data-ev-tag="${ev}">${currentNames[ev]}</span>`
                 ).join("");
 
                 card.innerHTML = `
@@ -616,6 +651,14 @@
                 `;
                 ghostContainer.appendChild(card);
             });
+
+            // Rimuove la classe blur-swap-active alla fine dell'animazione per evitare problemi di layout
+            ghostContainer.querySelectorAll('.evidence-tag').forEach(tag => {
+                tag.addEventListener('animationend', () => {
+                    tag.classList.remove('blur-swap-active');
+                }, { once: true });
+            });
+
             applyFiltering();
         }
 
@@ -624,16 +667,97 @@
             document.querySelectorAll(".evidence-btn").forEach(btn => {
                 const evType = btn.getAttribute("data-evidence");
                 btn.textContent = currentNames[evType];
+                
+                // Riavvia l'animazione di sfuocatura sui testi
+                btn.classList.remove("blur-swap-active");
+                void btn.offsetWidth; 
+                btn.classList.add("blur-swap-active");
+
+                // Rimuove la classe alla fine dell'animazione per non bloccare future transizioni di layout
+                btn.addEventListener('animationend', () => {
+                    btn.classList.remove("blur-swap-active");
+                }, { once: true });
             });
         }
 
         function applyGridColumns() {
-            const cols = gridColumnsSelect.value;
-            ghostContainer.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+            ghostContainer.style.gridTemplateColumns = `repeat(${selectedColumnsCount}, 1fr)`;
+        }
+
+        // Funzione per colorare dinamicamente lo sfondo dello slider a tema neon
+        function updateSliderBackground() {
+            const val = colSlider.value;
+            const min = colSlider.min ? colSlider.min : 1;
+            const max = colSlider.max ? colSlider.max : 5;
+            const percent = ((val - min) / (max - min)) * 100;
+            colSlider.style.background = `linear-gradient(to right, var(--primary) 0%, var(--primary) ${percent}%, var(--slider-track) ${percent}%, var(--slider-track) 100%)`;
+        }
+
+        function setupCustomDropdown() {
+            const wrapper = document.getElementById("view-profile-custom-select");
+            const trigger = document.getElementById("view-profile-trigger-text");
+            const options = wrapper.querySelectorAll(".custom-option");
+            const profiles = ["full", "compact", "minimal"];
+
+            wrapper.addEventListener("click", (e) => {
+                e.stopPropagation();
+                wrapper.classList.toggle("open");
+            });
+
+            options.forEach((opt, idx) => {
+                opt.addEventListener("click", () => {
+                    options.forEach(o => o.classList.remove("selected"));
+                    opt.classList.add("selected");
+                    trigger.textContent = opt.textContent;
+                    currentDensityMode = profiles[idx];
+                    
+                    const firstPositions = new Map();
+                    ghostContainer.querySelectorAll('.ghost-card').forEach(card => {
+                        firstPositions.set(card.id, card.getBoundingClientRect());
+                    });
+
+                    ghostContainer.className = `ghost-list view-${currentDensityMode}`;
+                    applyGridColumns(); 
+
+                    executeFlipAnimation(firstPositions);
+                });
+            });
+
+            document.addEventListener("click", () => {
+                wrapper.classList.remove("open");
+            });
+        }
+
+        // Algoritmo FLIP nativo ottimizzato con supporto scale e ancoraggio top-left
+        function executeFlipAnimation(firstPositions) {
+            ghostContainer.querySelectorAll('.ghost-card').forEach(card => {
+                const firstBox = firstPositions.get(card.id);
+                if (!firstBox) return;
+                
+                const lastBox = card.getBoundingClientRect();
+                const dx = firstBox.left - lastBox.left;
+                const dy = firstBox.top - lastBox.top;
+                const dw = firstBox.width / lastBox.width;
+                const dh = firstBox.height / lastBox.height;
+                
+                if (dx !== 0 || dy !== 0 || dw !== 1 || dh !== 1) {
+                    card.style.transition = 'none';
+                    card.style.transformOrigin = 'top left';
+                    card.style.transform = `translate(${dx}px, ${dy}px) scale(${dw}, ${dh})`;
+                    void card.offsetHeight; 
+                    card.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease, filter 0.3s ease, background-color 0.3s ease';
+                    card.style.transform = '';
+                    
+                    card.addEventListener('transitionend', function handler() {
+                        card.style.transition = '';
+                        card.style.transformOrigin = '';
+                        card.removeEventListener('transitionend', handler);
+                    });
+                }
+            });
         }
 
         function setupEventListeners() {
-            // Interactive 3-State Evidence Toggles logic loop
             document.querySelectorAll(".evidence-btn").forEach(btn => {
                 btn.addEventListener("click", () => {
                     const type = btn.getAttribute("data-evidence");
@@ -652,10 +776,12 @@
                 });
             });
 
-            // Manual Ghost Cards Exclusion click event tracking
             ghostContainer.addEventListener("click", (e) => {
                 if (e.target.classList.contains("action-exclude-btn")) {
                     const name = e.target.getAttribute("data-ghost");
+                    const card = document.getElementById(`ghost-${name}`);
+                    if(card.classList.contains("final-match")) return;
+
                     if (manuallyExcludedGhosts.has(name)) {
                         manuallyExcludedGhosts.delete(name);
                     } else {
@@ -665,16 +791,8 @@
                 }
             });
 
-            // Layout Control System Listeners
-            headerToggle.addEventListener("click", () => {
-                mainHeader.classList.toggle("hidden");
-            });
-
-            gearToggle.addEventListener("click", () => {
-                gearToggle.classList.toggle("active");
-                settingsPanel.classList.toggle("open");
-            });
-
+            headerToggle.addEventListener("click", () => { mainHeader.classList.toggle("hidden"); });
+            gearToggle.addEventListener("click", () => { gearToggle.classList.toggle("active"); settingsPanel.classList.toggle("open"); });
             sortToggle.addEventListener("change", applyFiltering);
             
             shortNamesToggle.addEventListener("change", () => {
@@ -682,21 +800,83 @@
                 renderGhosts();
             });
 
+            // ⚡ APPLICAZIONE COMPLETA E CORRETTA DELL'ALGORITMO FLIP SU GRIGLIA INDIZI (2 Colonne)
             cluesLayoutToggle.addEventListener("change", () => {
+                const btnPositions = new Map();
+                const buttons = evidenceButtonsContainer.querySelectorAll(".evidence-btn");
+                
+                // 1. FIRST: Registra la coordinata assoluta di partenza dei pulsanti indizio (posizione e dimensioni)
+                buttons.forEach(btn => {
+                    btnPositions.set(btn, btn.getBoundingClientRect());
+                });
+
+                // Esegui lo switch strutturale del layout griglia
                 if (cluesLayoutToggle.checked) {
                     evidenceButtonsContainer.classList.add("two-columns");
                 } else {
                     evidenceButtonsContainer.classList.remove("two-columns");
                 }
+
+                // 2. LAST, INVERT & PLAY: Calcola lo spostamento spaziale combinato a scala e applicalo allineando in alto a sinistra
+                buttons.forEach(btn => {
+                    const firstBox = btnPositions.get(btn);
+                    if (!firstBox) return;
+                    
+                    const lastBox = btn.getBoundingClientRect();
+                    const dx = firstBox.left - lastBox.left;
+                    const dy = firstBox.top - lastBox.top;
+                    const dw = firstBox.width / lastBox.width;
+                    const dh = firstBox.height / lastBox.height;
+
+                    if (dx !== 0 || dy !== 0 || dw !== 1 || dh !== 1) {
+                        // Inibisci temporaneamente la transizione nativa, ancora ad angolo e scala
+                        btn.style.transition = 'none';
+                        btn.style.transformOrigin = 'top left';
+                        btn.style.transform = `translate(${dx}px, ${dy}px) scale(${dw}, ${dh})`;
+                        
+                        // Forza il ricalcolo del layout (Reflow)
+                        void btn.offsetHeight; 
+                        
+                        // Avvia il rendering ripristinando la transizione e scalando fluidamente verso lo stato finale
+                        btn.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), padding 0.4s cubic-bezier(0.25, 1, 0.5, 1), font-size 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s';
+                        btn.style.transform = '';
+                        
+                        btn.addEventListener('transitionend', function handler() {
+                            btn.style.transition = '';
+                            btn.style.transformOrigin = '';
+                            btn.removeEventListener('transitionend', handler);
+                        });
+                    }
+                });
             });
 
-            viewProfileSelect.addEventListener("change", () => {
-                const currentCols = ghostContainer.style.gridTemplateColumns;
-                ghostContainer.className = `ghost-list view-${viewProfileSelect.value}`;
-                ghostContainer.style.gridTemplateColumns = currentCols; // Prevent style wipeouts
+            // Gestione dei trascinamenti e decorazioni dello Slider Colonne
+            colSlider.addEventListener("input", () => {
+                const firstPositions = new Map();
+                ghostContainer.querySelectorAll('.ghost-card').forEach(card => {
+                    firstPositions.set(card.id, card.getBoundingClientRect());
+                });
+
+                selectedColumnsCount = parseInt(colSlider.value, 10);
+                colLabels.forEach((lbl, idx) => {
+                    if ((idx + 1) === selectedColumnsCount) {
+                        lbl.classList.add("active");
+                    } else {
+                        lbl.classList.remove("active");
+                    }
+                });
+                applyGridColumns();
+                updateSliderBackground();
+
+                executeFlipAnimation(firstPositions);
             });
 
-            gridColumnsSelect.addEventListener("change", applyGridColumns);
+            colLabels.forEach((lbl, idx) => {
+                lbl.addEventListener("click", () => {
+                    colSlider.value = idx + 1;
+                    colSlider.dispatchEvent(new Event('input'));
+                });
+            });
 
             resetBtn.addEventListener("click", () => {
                 Object.keys(filterStates).forEach(k => filterStates[k] = 0);
@@ -707,13 +887,16 @@
         }
 
         function applyFiltering() {
+            const firstPositions = new Map();
+            ghostContainer.querySelectorAll('.ghost-card').forEach(card => {
+                firstPositions.set(card.id, card.getBoundingClientRect());
+            });
+
             const activeGhosts = [];
             let includedEvidenceCount = Object.values(filterStates).filter(s => s === 1).length;
 
-            // Step 1: Filter evaluation mapping loop against basic validation states
             ghosts.forEach(ghost => {
                 let valid = true;
-                
                 for (const [evidence, state] of Object.entries(filterStates)) {
                     if (state === 1 && !ghost.evidence.includes(evidence)) valid = false;
                     if (state === -1 && ghost.evidence.includes(evidence)) valid = false;
@@ -731,28 +914,23 @@
                 }
             });
 
-            // Step 2: Verification match confirmation marker parsing rules
             if (activeGhosts.length === 1 && includedEvidenceCount >= 3) {
                 const element = document.getElementById(`ghost-${activeGhosts[0].name}`);
                 element.classList.add("final-match");
             }
 
-            // Step 3: Run Sorting Execution Stack Engine Array Sorting
             const shouldSortAllPossible = sortToggle.checked;
             
             let sortedOrder = [...ghosts].sort((a, b) => {
                 const manualA = manuallyExcludedGhosts.has(a.name);
                 const manualB = manuallyExcludedGhosts.has(b.name);
-                
                 if (manualA && !manualB) return 1;
                 if (!manualA && manualB) return -1;
 
                 const elA = document.getElementById(`ghost-${a.name}`);
                 const elB = document.getElementById(`ghost-${b.name}`);
-                
                 const isFinalA = elA.classList.contains("final-match");
                 const isFinalB = elB.classList.contains("final-match");
-                
                 if (isFinalA) return -1;
                 if (isFinalB) return 1;
 
@@ -762,17 +940,16 @@
                     if (!isFadedA && isFadedB) return -1;
                     if (isFadedA && !isFadedB) return 1;
                 }
-
                 return a.name.localeCompare(b.name);
             });
 
-            // Re-render visual distribution structures using DOM injection append pipelines
             sortedOrder.forEach(ghost => {
                 const el = document.getElementById(`ghost-${ghost.name}`);
                 ghostContainer.appendChild(el);
             });
 
-            // Step 4: Lockout Impossible combinations and apply dynamic tags updates
+            executeFlipAnimation(firstPositions);
+
             const poolOfPossibleEvidence = new Set();
             activeGhosts.forEach(ghost => ghost.evidence.forEach(ev => poolOfPossibleEvidence.add(ev)));
 
@@ -783,20 +960,14 @@
                     const element = document.getElementById(`ghost-${ghost.name}`);
                     const tag = element.querySelector(`[data-ev-tag="${type}"]`);
                     if (tag) {
-                        if (filterStates[type] === 1) {
-                            tag.classList.add("highlight");
-                        } else {
-                            tag.classList.remove("highlight");
-                        }
+                        if (filterStates[type] === 1) tag.classList.add("highlight");
+                        else tag.classList.remove("highlight");
                     }
                 });
 
                 if (filterStates[type] === 0) {
-                    if (!poolOfPossibleEvidence.has(type)) {
-                        btn.classList.add("impossible");
-                    } else {
-                        btn.classList.remove("impossible");
-                    }
+                    if (!poolOfPossibleEvidence.has(type)) btn.classList.add("impossible");
+                    else btn.classList.remove("impossible");
                 } else {
                     btn.classList.remove("impossible");
                 }
