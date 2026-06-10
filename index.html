@@ -312,30 +312,31 @@
     </div>
 
     <script>
+        // Official exact data synchronized directly from the Demonology Wiki
         const ghosts = [
-            { name: "Aswang", evidence: ["emf", "handprints", "wither"], strength: "Highly aggressive in small spaces.", weakness: "Slower in well-lit areas." },
-            { name: "Banshee", evidence: ["ghost_orb", "writing", "projector"], strength: "Targets a single hunter relentlessly.", weakness: "Produces a unique cry on the microphone." },
-            { name: "Demon", evidence: ["freezing", "writing", "wither"], strength: "Extremely hostile; chains hunts rapidly regardless of energy levels.", weakness: "Crucifixes have an increased range and spin/float when burning." },
-            { name: "Dullahan", evidence: ["emf", "spirit_box", "projector"], strength: "Accelerates sharply when tracking a targeted line of sight.", weakness: "Becomes easily confused when you quickly break line of sight." },
-            { name: "Dybbuk", evidence: ["handprints", "spirit_box", "writing"], strength: "Gains speed dynamically as your team's energy drops.", weakness: "Highly active around cursed objects." },
-            { name: "Entity", evidence: ["emf", "ghost_orb", "freezing"], strength: "Can instantly teleport directly behind a random player.", weakness: "Emits a local high EMF spike immediately prior to teleporting." },
-            { name: "Ghoul", evidence: ["spirit_box", "projector", "wither"], strength: "Feasts on hunter energy values in total darkness.", weakness: "Cannot trigger radio noise variations or disable electronics." },
-            { name: "Keres", evidence: ["emf", "freezing", "projector"], strength: "Actively hunts down the player with the lowest energy score.", weakness: "Extremely predictable pathing tracking patterns." },
-            { name: "Leviathan", evidence: ["ghost_orb", "freezing", "writing"], strength: "Freezes multiple interconnected rooms simultaneously.", weakness: "Extremely heavy, loud, and slow pacing footsteps." },
-            { name: "Nightmare", evidence: ["handprints", "ghost_orb", "wither"], strength: "Drastically drops ambient darkness illumination during hunts.", weakness: "Visually disoriented for brief moments by direct flashlight beam spikes." },
-            { name: "Oni", evidence: ["emf", "handprints", "projector"], strength: "Passively sprints during hunts and manifests frequently.", weakness: "Increased manifestation rate makes capturing photos simple." },
-            { name: "Phantom", evidence: ["spirit_box", "ghost_orb", "freezing"], strength: "Flickers much slower during hunts, making observation difficult.", weakness: "Looking directly at it drains energy, but taking a photo makes it vanish." },
-            { name: "Revenant", evidence: ["handprints", "writing", "projector"], strength: "Sprints at lethal speeds when catching visual line of sight.", weakness: "Moves incredibly slowly when players are hidden out of sight." },
-            { name: "Shadow", evidence: ["emf", "writing", "wither"], strength: "Extremely shy; minimizes environmental interaction when grouped up.", weakness: "Activity completely halted by standard room lights." },
-            { name: "Siren", evidence: ["spirit_box", "ghost_orb", "wither"], strength: "Lures players using distinct directional audio tricks.", weakness: "Only produces unique feminine vocal sound cues on devices." },
-            { name: "Skinwalker", evidence: ["emf", "handprints", "freezing"], strength: "Can mimic other entity traits, behaviors, and fake Ghost Orbs.", weakness: "Leaves contrasting minor evidence clues over long periods." },
-            { name: "Specter", evidence: ["handprints", "ghost_orb", "projector"], strength: "Capable of floating cleanly through physical layout walls.", weakness: "Leaves no track marks or interaction footprints when navigating salt." },
-            { name: "Spirit", evidence: ["emf", "spirit_box", "writing"], strength: "Very unpredictable random baseline roaming shifts.", weakness: "Pacified for double the duration when using Holy Oil / Smudge kits." },
-            { name: "The Wisp", evidence: ["ghost_orb", "projector", "wither"], strength: "Highly mobile entity that moves its favorite room frequently.", weakness: "Leaves bright trails of light while navigating through Laser Projectors." },
-            { name: "Umbra", evidence: ["freezing", "projector", "wither"], strength: "Blends seamlessly into shadows, obscuring standard visual hunting cues.", weakness: "Highly sensitive to Energy Watches and high-tier lighting systems." },
-            { name: "Vex", evidence: ["emf", "spirit_box", "freezing"], strength: "Intelligently checks common player hiding spots.", weakness: "Emits a distinct metallic clicking noise while roaming." },
-            { name: "Wendigo", evidence: ["handprints", "freezing", "wither"], strength: "Enters a bloodlust state if a player dies or wanders alone.", weakness: "Emits massive growling audio tells long before a hunt begins." },
-            { name: "Wraith", evidence: ["emf", "spirit_box", "handprints"], strength: "Passively drains player energy fast just by being nearby.", weakness: "Will completely refuse to step on or disturb lines of salt." }
+            { name: "Aswang", evidence: ["emf", "writing", "wither"], strength: "Speed increases every time they kill.", weakness: "Salt slows them. Only ghost with both Wither and Ghost Writing evidence." },
+            { name: "Banshee", evidence: ["freezing", "ghost_orb", "handprints"], strength: "Can break multiple windows/mirrors at once.", weakness: "Can sometimes let out a unique wail at the start of its hunt." },
+            { name: "Demon", evidence: ["emf", "freezing", "handprints"], strength: "Hunts frequently.", weakness: "Crosses have a larger range and cause them to float upon burning." },
+            { name: "Dullahan", evidence: ["freezing", "projector", "wither"], strength: "Appear headless in photos, making the Photo Camera highly useful.", weakness: "Increases in speed the longer someone is within line-of-sight." },
+            { name: "Dybbuk", evidence: ["freezing", "handprints", "wither"], strength: "Can throw corpses around the environment.", weakness: "Stunned completely after the music box is first played." },
+            { name: "Entity", evidence: ["handprints", "projector", "spirit_box"], strength: "Able to teleport cleanly between structural rooms.", weakness: "Can teleport environmental objects, indicated by a visual smoke effect." },
+            { name: "Ghoul", evidence: ["freezing", "ghost_orb", "spirit_box"], strength: "Excessive messages typed into chat log channels will directly cause an immediate hunt.", weakness: "Completely unable to disable local electronics." },
+            { name: "Keres", evidence: ["handprints", "spirit_box", "wither"], strength: "Targets the hunter with the least energy. (In Solo configurations: targets if you sit below 90% energy).", weakness: "Movement speed actively decreases every single time they secure a kill." },
+            { name: "Leviathan", evidence: ["writing", "handprints", "ghost_orb"], strength: "Capable of throwing multiple items simultaneously.", weakness: "Passively turns off nearby light installations." },
+            { name: "Nightmare", evidence: ["emf", "ghost_orb", "spirit_box"], strength: "Can actively cause persistent auditory hallucinations for target players.", weakness: "Extremely afraid of lit rooms." },
+            { name: "Oni", evidence: ["freezing", "projector", "spirit_box"], strength: "Extremely fast during standard hunting segments.", weakness: "Highly likely to start ghost events and easily reveal its physical appearance." },
+            { name: "Phantom", evidence: ["emf", "handprints", "ghost_orb"], strength: "Moves significantly faster while completely invisible during hunts.", weakness: "Blinks in-and-out much slower than typical baseline entities." },
+            { name: "Revenant", evidence: ["emf", "freezing", "writing"], strength: "Operates on a significantly low hunting cooldown cycle.", weakness: "Immediately halts its active hunt once any single player is successfully killed." },
+            { name: "Shadow", evidence: ["emf", "writing", "projector"], strength: "Causes much lower temperature modifications than traditional ghosts.", weakness: "Significantly less likely to perform environmental ghost activity inside lit rooms." },
+            { name: "Siren", evidence: ["emf", "spirit_box", "wither"], strength: "Anyone lingering inside its visual line-of-sight will be heavily slowed down.", weakness: "Responds strictly with a female voice/model. Can hum into the Spirit box ('-HUMMING-') instead of normal speech." },
+            { name: "Skinwalker", evidence: ["freezing", "writing", "spirit_box"], strength: "Intelligently mimics other ghost behaviors and unique baseline abilities.", weakness: "Fakes the Ghost Orb evidence to intentionally misdirect investigations." },
+            { name: "Specter", evidence: ["emf", "freezing", "projector"], strength: "Throws items frequently around rooms.", weakness: "Does not roam; will strictly stick inside its designated ghost room except while hunting." },
+            { name: "Spirit", evidence: ["writing", "handprints", "spirit_box"], strength: "Standard unpredictable baseline interaction patterns.", weakness: "Possesses the unique magical property to alter lit up candles to a blue flame color." },
+            { name: "The Wisp", evidence: ["projector", "ghost_orb", "wither"], strength: "Possesses the ability to ignite standard candles.", weakness: "Can walk cleanly through lines of fire. Can only initiate a hunt when a player stands in its favorite room." },
+            { name: "Umbra", evidence: ["handprints", "ghost_orb", "projector"], strength: "Does not produce standard audible footstep sounds while walking.", weakness: "Moves noticeably slower inside lit rooms." },
+            { name: "Vex", evidence: ["freezing", "ghost_orb", "wither"], strength: "Capable of walking cleanly through physical boundaries and walls.", weakness: "Completely invisible to standard LIDAR Scan readouts." },
+            { name: "Wendigo", evidence: ["writing", "ghost_orb", "projector"], strength: "Increases in movement speed dynamically as average player energy values decrease.", weakness: "Significantly less likely to launch hunts near active, open flames (Candles or Lanterns)." },
+            { name: "Wraith", evidence: ["emf", "projector", "spirit_box"], strength: "Depletes a player's raw energy rapidly at a rate of roughly 0.2% - 0.4% per second.", weakness: "Will never step on or disturb lines of salt." }
         ];
 
         const evidenceNames = {
@@ -428,7 +429,7 @@
                 }
 
                 const element = document.getElementById(`ghost-${ghost.name}`);
-                element.classList.remove("final-match"); // Reset state formatting
+                element.classList.remove("final-match");
 
                 if (valid) {
                     element.classList.remove("faded");
@@ -455,11 +456,9 @@
                 const isFinalA = elA.classList.contains("final-match");
                 const isFinalB = elB.classList.contains("final-match");
                 
-                // Rule A: Identified 3-evidence ghost always goes to absolute top
                 if (isFinalA) return -1;
                 if (isFinalB) return 1;
 
-                // Rule B: Option dependent sorting layer
                 if (shouldSortAllPossible) {
                     const isFadedA = elA.classList.contains("faded");
                     const isFadedB = elB.classList.contains("faded");
@@ -467,11 +466,9 @@
                     if (isFadedA && !isFadedB) return 1;
                 }
 
-                // Rule C: Maintain clean alphabetical structure
                 return a.name.localeCompare(b.name);
             });
 
-            // Re-order layout rendering tree
             sortedOrder.forEach(ghost => {
                 const el = document.getElementById(`ghost-${ghost.name}`);
                 ghostContainer.appendChild(el);
