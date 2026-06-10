@@ -31,21 +31,6 @@ This utility maps the exact collection of evidence parameters native to Demonolo
 
 ---
 
-## 🚀 Fast Deployment
-
-### Local Desktop Execution
-1. Download or copy the code from `index.html`.
-2. Save it on your system's local machine storage path.
-3. Double-click `index.html` to load the toolkit layout instantly in any modern internet browser.
-
-### Deploying to GitHub Pages
-1. Push `index.html` directly to a public or private GitHub repository directory.
-2. Head into your repository dashboard navigation bar: **Settings** -> **Pages**.
-3. Point your source build settings dropdown matrix link to track the `main` branch root folder.
-4. Hit save to obtain a public live web deployment URL.
-
----
-
 ## 📋 Ghost Registry Matrix Included
 
 The data array currently supports fast cross-filtering matching configurations for the full directory:
