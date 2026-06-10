@@ -30,13 +30,51 @@
             color: var(--text-main);
             padding: 20px;
             line-height: 1.6;
+            position: relative;
         }
 
+        /* Concealed Minimal Header Toggle */
+        .header-toggle-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            opacity: 0.25;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 100;
+            padding: 5px;
+        }
+
+        .header-toggle-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.1);
+        }
+
+        /* Animated Header Section */
         header {
             text-align: center;
-            margin-bottom: 30px;
+            max-height: 150px;
+            opacity: 1;
+            overflow: hidden;
+            margin-bottom: 20px;
             padding-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        opacity 0.3s ease, 
+                        margin 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        header.hidden {
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom-color: transparent;
         }
 
         header h1 {
@@ -52,16 +90,21 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 320px 1fr;
             gap: 30px;
+            transition: grid-template-columns 0.3s ease;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             .container {
                 grid-template-columns: 1fr;
+            }
+            .evidence-panel {
+                position: relative !important;
+                top: 0 !important;
             }
         }
 
@@ -74,21 +117,124 @@
             height: fit-content;
             position: sticky;
             top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        .panel-title {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--text-main);
-            text-transform: uppercase;
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border-bottom: 2px solid var(--primary);
             padding-bottom: 5px;
         }
 
-        .evidence-grid {
+        .panel-title {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .gear-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: color 0.2s, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .gear-btn:hover {
+            color: var(--text-main);
+            transform: rotate(60deg);
+        }
+
+        .gear-btn.active {
+            color: var(--highlight-gold);
+            transform: rotate(120deg);
+        }
+
+        /* Animated Settings Drawer Panel */
+        .settings-drawer {
+            background-color: #0d0f12;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            padding: 0 15px;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
+            gap: 12px;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+                        opacity 0.25s ease, 
+                        padding 0.35s ease,
+                        border-color 0.35s ease;
+        }
+
+        .settings-drawer.open {
+            max-height: 350px;
+            opacity: 1;
+            padding: 15px;
+            border-color: var(--border-color);
+        }
+
+        .setting-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .setting-item label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .setting-item select {
+            background: var(--state-neutral);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 6px;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
             gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .toggle-label input {
+            cursor: pointer;
+            accent-color: var(--state-included);
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Evidence Clues Grid Matrix */
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            transition: grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .evidence-grid.two-columns {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
         }
 
         .evidence-btn {
@@ -100,14 +246,20 @@
             cursor: pointer;
             font-weight: 600;
             text-align: left;
-            transition: all 0.2s ease;
+            transition: all 0.2s ease, transform 0.1s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 0.85rem;
         }
 
-        .evidence-btn:hover {
-            opacity: 0.9;
+        .evidence-grid.two-columns .evidence-btn {
+            padding: 10px 8px;
+            font-size: 0.78rem;
+        }
+
+        .evidence-btn:active {
+            transform: scale(0.97);
         }
 
         .evidence-btn.included {
@@ -115,9 +267,7 @@
             border-color: #3fb950;
         }
 
-        .evidence-btn.included::after {
-            content: "✓";
-        }
+        .evidence-btn.included::after { content: "✓"; }
 
         .evidence-btn.excluded {
             background-color: var(--state-excluded);
@@ -126,9 +276,7 @@
             opacity: 0.5;
         }
 
-        .evidence-btn.excluded::after {
-            content: "✕";
-        }
+        .evidence-btn.excluded::after { content: "✕"; }
 
         .evidence-btn.impossible {
             background-color: #12141a;
@@ -140,33 +288,7 @@
             cursor: not-allowed;
         }
 
-        /* Options Toggle Styles */
-        .options-group {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .toggle-label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            user-select: none;
-            line-height: 1.3;
-        }
-
-        .toggle-label input {
-            cursor: pointer;
-            accent-color: var(--state-included);
-            width: 16px;
-            height: 16px;
-        }
-
         .reset-btn {
-            margin-top: 15px;
             width: 100%;
             background-color: transparent;
             color: var(--text-muted);
@@ -175,19 +297,20 @@
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
 
         .reset-btn:hover {
             background-color: rgba(218, 54, 51, 0.1);
             color: #ff7b72;
+            border-color: var(--primary);
         }
 
-        /* Ghost Grid Styles */
+        /* Ghost Main Dynamic Grid Layout */
         .ghost-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
+            align-content: start;
         }
 
         .ghost-card {
@@ -195,38 +318,84 @@
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 20px;
-            transition: all 0.25s ease;
+            position: relative;
+            /* Smooth item filter animations */
+            transition: opacity 0.3s ease, 
+                        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                        border-color 0.3s ease, 
+                        box-shadow 0.3s ease, 
+                        filter 0.3s ease;
         }
 
         .ghost-card.faded {
-            opacity: 0.15;
+            opacity: 0.12;
             pointer-events: none;
-            transform: scale(0.98);
+            transform: scale(0.97);
+            filter: blur(0.5px);
         }
 
-        /* Highlighted Identified Ghost Style */
+        .ghost-card.manually-excluded {
+            opacity: 0.08 !important;
+            filter: grayscale(1);
+            border-color: #484f58;
+            transform: scale(0.96);
+        }
+
         .ghost-card.final-match {
             border-color: var(--highlight-gold);
-            box-shadow: 0 0 15px rgba(241, 196, 15, 0.15);
+            box-shadow: 0 0 18px rgba(241, 196, 15, 0.2);
             background-color: rgba(241, 196, 15, 0.02);
             transform: scale(1.02);
         }
 
-        .ghost-name {
-            font-size: 1.4rem;
-            color: #ff7b72;
-            margin-bottom: 10px;
-            text-transform: uppercase;
+        .ghost-header-wrapper {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .ghost-name {
+            font-size: 1.3rem;
+            color: #ff7b72;
+            text-transform: uppercase;
+            font-weight: bold;
         }
 
         .ghost-card.final-match .ghost-name {
             color: var(--highlight-gold);
         }
 
-        .ghost-card.final-match .ghost-name::after {
+        .ghost-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-exclude-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            line-height: 1;
+        }
+
+        .action-exclude-btn:hover {
+            color: var(--primary);
+            background: rgba(218, 54, 51, 0.15);
+            transform: scale(1.15);
+        }
+
+        .ghost-card.manually-excluded .action-exclude-btn {
+            color: var(--highlight-gold);
+            transform: rotate(45deg);
+        }
+
+        .ghost-card.final-match .ghost-header-wrapper::after {
             content: "IDENTIFIED";
             font-size: 0.7rem;
             background-color: var(--highlight-gold);
@@ -246,21 +415,23 @@
 
         .evidence-tag {
             background-color: rgba(255, 255, 255, 0.05);
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             padding: 3px 8px;
             border-radius: 4px;
             border: 1px solid var(--border-color);
             color: var(--text-muted);
+            transition: all 0.25s ease;
         }
 
         .evidence-tag.highlight {
             color: #58a6ff;
             border-color: #388bfd;
-            background-color: rgba(56, 139, 253, 0.1);
+            background-color: rgba(56, 139, 253, 0.15);
+            transform: translateY(-1px);
         }
 
         .traits {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             padding-top: 10px;
         }
@@ -274,19 +445,71 @@
             color: var(--text-muted);
             margin-bottom: 5px;
         }
+
+        /* Structuring View Profiling Layout Tweaks */
+        .ghost-list.view-compact .traits { display: none !important; }
+        .ghost-list.view-minimal .traits,
+        .ghost-list.view-minimal .ghost-evidence { display: none !important; }
+        .ghost-list.view-minimal .ghost-card { padding: 12px 16px; }
+        .ghost-list.view-minimal .ghost-header-wrapper { margin-bottom: 0; }
     </style>
 </head>
 <body>
 
-    <header>
+    <button class="header-toggle-btn" id="header-toggle" title="Toggle Header View">👁️</button>
+
+    <header id="main-header">
         <h1>Demonology Cheat Sheet</h1>
         <p>Interactive evidence filtering tool for the Roblox Demonology game</p>
     </header>
 
-    <div class="container">
+    <div class="container" id="main-container">
         <aside class="evidence-panel">
-            <div class="panel-title">Evidence Filters</div>
-            <div class="evidence-grid">
+            <div class="panel-header">
+                <div class="panel-title">Evidence Filters</div>
+                <button class="gear-btn" id="gear-toggle" title="Open Layout Settings">⚙️</button>
+            </div>
+
+            <div class="settings-drawer" id="settings-panel">
+                <div class="setting-item">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="sort-possible-toggle" checked>
+                        <span>Float Valid Ghosts to Top</span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="short-names-toggle">
+                        <span>Use Short Clue Names</span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="clues-layout-toggle">
+                        <span>Organize Clues in 2 Columns</span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label for="view-profile">Display Mode</label>
+                    <select id="view-profile">
+                        <option value="full" selected>Full Details</option>
+                        <option value="compact">Compact View (No Descriptions)</option>
+                        <option value="minimal">Essential View (Names Only)</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label for="grid-columns">Grid Columns Configuration</label>
+                    <select id="grid-columns">
+                        <option value="1">1 Column</option>
+                        <option value="2" selected>2 Columns</option>
+                        <option value="3">3 Columns</option>
+                        <option value="4">4 Columns</option>
+                        <option value="5">5 Columns</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="evidence-grid" id="evidence-buttons-container">
                 <button class="evidence-btn" data-evidence="emf">EMF Level 5</button>
                 <button class="evidence-btn" data-evidence="handprints">Handprints</button>
                 <button class="evidence-btn" data-evidence="spirit_box">Spirit Box</button>
@@ -297,13 +520,6 @@
                 <button class="evidence-btn" data-evidence="wither">Wither</button>
             </div>
 
-            <div class="options-group">
-                <label class="toggle-label">
-                    <input type="checkbox" id="sort-possible-toggle" checked>
-                    <span>Always bring possible ghosts to the top</span>
-                </label>
-            </div>
-
             <button class="reset-btn" id="reset-btn">Clear All Filters</button>
         </aside>
 
@@ -312,7 +528,7 @@
     </div>
 
     <script>
-        // Official exact data synchronized directly from the Demonology Wiki
+        // Official Wiki Source Data Structuring
         const ghosts = [
             { name: "Aswang", evidence: ["emf", "writing", "wither"], strength: "Speed increases every time they kill.", weakness: "Salt slows them. Only ghost with both Wither and Ghost Writing evidence." },
             { name: "Banshee", evidence: ["freezing", "ghost_orb", "handprints"], strength: "Can break multiple windows/mirrors at once.", weakness: "Can sometimes let out a unique wail at the start of its hunt." },
@@ -329,7 +545,7 @@
             { name: "Revenant", evidence: ["emf", "freezing", "writing"], strength: "Operates on a significantly low hunting cooldown cycle.", weakness: "Immediately halts its active hunt once any single player is successfully killed." },
             { name: "Shadow", evidence: ["emf", "writing", "projector"], strength: "Causes much lower temperature modifications than traditional ghosts.", weakness: "Significantly less likely to perform environmental ghost activity inside lit rooms." },
             { name: "Siren", evidence: ["emf", "spirit_box", "wither"], strength: "Anyone lingering inside its visual line-of-sight will be heavily slowed down.", weakness: "Responds strictly with a female voice/model. Can hum into the Spirit box ('-HUMMING-') instead of normal speech." },
-            { name: "Skinwalker", evidence: ["freezing", "writing", "spirit_box"], strength: "Intelligently mimics other ghost behaviors and unique baseline abilities.", weakness: "Fakes the Ghost Orb evidence to intentionally misdirect investigations." },
+            { name: "Skinwalker", evidence: ["freezing", "writing", "spirit_box", "ghost_orb"], strength: "Intelligently mimics other ghost behaviors and unique baseline abilities.", weakness: "Fakes the Ghost Orb evidence to intentionally misdirect investigations." },
             { name: "Specter", evidence: ["emf", "freezing", "projector"], strength: "Throws items frequently around rooms.", weakness: "Does not roam; will strictly stick inside its designated ghost room except while hunting." },
             { name: "Spirit", evidence: ["writing", "handprints", "spirit_box"], strength: "Standard unpredictable baseline interaction patterns.", weakness: "Possesses the unique magical property to alter lit up candles to a blue flame color." },
             { name: "The Wisp", evidence: ["projector", "ghost_orb", "wither"], strength: "Possesses the ability to ignite standard candles.", weakness: "Can walk cleanly through lines of fire. Can only initiate a hunt when a player stands in its favorite room." },
@@ -339,42 +555,57 @@
             { name: "Wraith", evidence: ["emf", "projector", "spirit_box"], strength: "Depletes a player's raw energy rapidly at a rate of roughly 0.2% - 0.4% per second.", weakness: "Will never step on or disturb lines of salt." }
         ];
 
-        const evidenceNames = {
-            emf: "EMF Level 5",
-            handprints: "Handprints",
-            spirit_box: "Spirit Box",
-            ghost_orb: "Ghost Orb",
-            freezing: "Freezing Temps",
-            writing: "Ghost Writing",
-            projector: "Laser Projector",
-            wither: "Wither"
-        };
+        const nomenclatureNormal = { emf: "EMF Level 5", handprints: "Handprints", spirit_box: "Spirit Box", ghost_orb: "Ghost Orb", freezing: "Freezing Temps", writing: "Ghost Writing", projector: "Laser Projector", wither: "Wither" };
+        const nomenclatureShort = { emf: "EMF", handprints: "UV", spirit_box: "Spirit", ghost_orb: "Orbs", freezing: "Temps", writing: "Writing", projector: "DOTS", wither: "Wither" };
 
         let filterStates = { emf: 0, handprints: 0, spirit_box: 0, ghost_orb: 0, freezing: 0, writing: 0, projector: 0, wither: 0 };
+        let manuallyExcludedGhosts = new Set();
 
         const ghostContainer = document.getElementById("ghost-container");
-        const buttons = document.querySelectorAll(".evidence-btn");
+        const evidenceButtonsContainer = document.getElementById("evidence-buttons-container");
         const resetBtn = document.getElementById("reset-btn");
+        const headerToggle = document.getElementById("header-toggle");
+        const mainHeader = document.getElementById("main-header");
+        const gearToggle = document.getElementById("gear-toggle");
+        const settingsPanel = document.getElementById("settings-panel");
+        
+        // Settings Elements
         const sortToggle = document.getElementById("sort-possible-toggle");
+        const shortNamesToggle = document.getElementById("short-names-toggle");
+        const cluesLayoutToggle = document.getElementById("clues-layout-toggle");
+        const viewProfileSelect = document.getElementById("view-profile");
+        const gridColumnsSelect = document.getElementById("grid-columns");
 
         function init() {
             renderGhosts();
             setupEventListeners();
+            applyGridColumns(); // Establish layout constraints from initialization state
+        }
+
+        function getActiveNomenclature() {
+            return shortNamesToggle.checked ? nomenclatureShort : nomenclatureNormal;
         }
 
         function renderGhosts() {
             ghostContainer.innerHTML = "";
+            const currentNames = getActiveNomenclature();
+
             ghosts.sort((a, b) => a.name.localeCompare(b.name)).forEach(ghost => {
                 const card = document.createElement("div");
                 card.className = "ghost-card";
                 card.id = `ghost-${ghost.name}`;
 
                 const tagsHTML = ghost.evidence.map(ev => 
-                    `<span class="evidence-tag" data-ev-tag="${ev}">${evidenceNames[ev]}</span>`
+                    `<span class="evidence-tag" data-ev-tag="${ev}">${currentNames[ev]}</span>`
                 ).join("");
 
                 card.innerHTML = `
-                    <div class="ghost-name">${ghost.name}</div>
+                    <div class="ghost-header-wrapper">
+                        <div class="ghost-name">${ghost.name}</div>
+                        <div class="ghost-actions">
+                            <button class="action-exclude-btn" data-ghost="${ghost.name}" title="Toggle Manual Exclusion">✕</button>
+                        </div>
+                    </div>
                     <div class="ghost-evidence">${tagsHTML}</div>
                     <div class="traits">
                         <div class="trait-title">Strength:</div>
@@ -388,68 +619,134 @@
             applyFiltering();
         }
 
+        function updateButtonLabels() {
+            const currentNames = getActiveNomenclature();
+            document.querySelectorAll(".evidence-btn").forEach(btn => {
+                const evType = btn.getAttribute("data-evidence");
+                btn.textContent = currentNames[evType];
+            });
+        }
+
+        function applyGridColumns() {
+            const cols = gridColumnsSelect.value;
+            ghostContainer.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+        }
+
         function setupEventListeners() {
-            buttons.forEach(btn => {
+            // Interactive 3-State Evidence Toggles logic loop
+            document.querySelectorAll(".evidence-btn").forEach(btn => {
                 btn.addEventListener("click", () => {
                     const type = btn.getAttribute("data-evidence");
-                    
                     if (filterStates[type] === 0) {
                         filterStates[type] = 1;
-                        btn.className = "evidence-btn included";
+                        btn.classList.add("included");
                     } else if (filterStates[type] === 1) {
                         filterStates[type] = -1;
-                        btn.className = "evidence-btn excluded";
+                        btn.classList.remove("included");
+                        btn.classList.add("excluded");
                     } else {
                         filterStates[type] = 0;
-                        btn.className = "evidence-btn";
+                        btn.classList.remove("excluded");
                     }
                     applyFiltering();
                 });
             });
 
+            // Manual Ghost Cards Exclusion click event tracking
+            ghostContainer.addEventListener("click", (e) => {
+                if (e.target.classList.contains("action-exclude-btn")) {
+                    const name = e.target.getAttribute("data-ghost");
+                    if (manuallyExcludedGhosts.has(name)) {
+                        manuallyExcludedGhosts.delete(name);
+                    } else {
+                        manuallyExcludedGhosts.add(name);
+                    }
+                    applyFiltering();
+                }
+            });
+
+            // Layout Control System Listeners
+            headerToggle.addEventListener("click", () => {
+                mainHeader.classList.toggle("hidden");
+            });
+
+            gearToggle.addEventListener("click", () => {
+                gearToggle.classList.toggle("active");
+                settingsPanel.classList.toggle("open");
+            });
+
             sortToggle.addEventListener("change", applyFiltering);
+            
+            shortNamesToggle.addEventListener("change", () => {
+                updateButtonLabels();
+                renderGhosts();
+            });
+
+            cluesLayoutToggle.addEventListener("change", () => {
+                if (cluesLayoutToggle.checked) {
+                    evidenceButtonsContainer.classList.add("two-columns");
+                } else {
+                    evidenceButtonsContainer.classList.remove("two-columns");
+                }
+            });
+
+            viewProfileSelect.addEventListener("change", () => {
+                const currentCols = ghostContainer.style.gridTemplateColumns;
+                ghostContainer.className = `ghost-list view-${viewProfileSelect.value}`;
+                ghostContainer.style.gridTemplateColumns = currentCols; // Prevent style wipeouts
+            });
+
+            gridColumnsSelect.addEventListener("change", applyGridColumns);
 
             resetBtn.addEventListener("click", () => {
                 Object.keys(filterStates).forEach(k => filterStates[k] = 0);
-                buttons.forEach(b => b.className = "evidence-btn");
+                manuallyExcludedGhosts.clear();
+                document.querySelectorAll(".evidence-btn").forEach(b => b.className = "evidence-btn");
                 applyFiltering();
             });
         }
 
         function applyFiltering() {
             const activeGhosts = [];
-            let selectedEvidenceCount = Object.values(filterStates).filter(s => s === 1).length;
+            let includedEvidenceCount = Object.values(filterStates).filter(s => s === 1).length;
 
-            // Step 1: Base validation mapping
+            // Step 1: Filter evaluation mapping loop against basic validation states
             ghosts.forEach(ghost => {
                 let valid = true;
+                
                 for (const [evidence, state] of Object.entries(filterStates)) {
                     if (state === 1 && !ghost.evidence.includes(evidence)) valid = false;
                     if (state === -1 && ghost.evidence.includes(evidence)) valid = false;
                 }
 
                 const element = document.getElementById(`ghost-${ghost.name}`);
-                element.classList.remove("final-match");
+                element.classList.remove("faded", "manually-excluded", "final-match");
 
-                if (valid) {
-                    element.classList.remove("faded");
+                if (manuallyExcludedGhosts.has(ghost.name)) {
+                    element.classList.add("manually-excluded");
+                } else if (valid) {
                     activeGhosts.push(ghost);
                 } else {
                     element.classList.add("faded");
                 }
             });
 
-            // Step 2: Handle Final Identification rule
-            const isFinalUniqueMatch = (activeGhosts.length === 1 && selectedEvidenceCount === 3);
-            if (isFinalUniqueMatch) {
-                const identifiedElement = document.getElementById(`ghost-${activeGhosts[0].name}`);
-                identifiedElement.classList.add("final-match");
+            // Step 2: Verification match confirmation marker parsing rules
+            if (activeGhosts.length === 1 && includedEvidenceCount >= 3) {
+                const element = document.getElementById(`ghost-${activeGhosts[0].name}`);
+                element.classList.add("final-match");
             }
 
-            // Step 3: Run Dynamic DOM Sorting Engine
+            // Step 3: Run Sorting Execution Stack Engine Array Sorting
             const shouldSortAllPossible = sortToggle.checked;
             
             let sortedOrder = [...ghosts].sort((a, b) => {
+                const manualA = manuallyExcludedGhosts.has(a.name);
+                const manualB = manuallyExcludedGhosts.has(b.name);
+                
+                if (manualA && !manualB) return 1;
+                if (!manualA && manualB) return -1;
+
                 const elA = document.getElementById(`ghost-${a.name}`);
                 const elB = document.getElementById(`ghost-${b.name}`);
                 
@@ -469,19 +766,20 @@
                 return a.name.localeCompare(b.name);
             });
 
+            // Re-render visual distribution structures using DOM injection append pipelines
             sortedOrder.forEach(ghost => {
                 const el = document.getElementById(`ghost-${ghost.name}`);
                 ghostContainer.appendChild(el);
             });
 
-            // Step 4: Handle button lockouts for mathematically impossible combinations
+            // Step 4: Lockout Impossible combinations and apply dynamic tags updates
             const poolOfPossibleEvidence = new Set();
             activeGhosts.forEach(ghost => ghost.evidence.forEach(ev => poolOfPossibleEvidence.add(ev)));
 
-            buttons.forEach(btn => {
+            document.querySelectorAll(".evidence-btn").forEach(btn => {
                 const type = btn.getAttribute("data-evidence");
 
-                activeGhosts.forEach(ghost => {
+                ghosts.forEach(ghost => {
                     const element = document.getElementById(`ghost-${ghost.name}`);
                     const tag = element.querySelector(`[data-ev-tag="${type}"]`);
                     if (tag) {
