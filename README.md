@@ -1,1 +1,63 @@
-# demonology-cs
+# 🔍 Roblox Demonology Interactive Cheat Sheet
+
+An interactive, responsive single-page web utility application engineered to filter down ghost types inside the popular **Roblox horror experience: Demonology**. Heavily inspired by modern interactive Phasmophobia companion apps.
+
+---
+
+## 🛠️ Key Features
+
+* **3-State Interactive Evidence Toggles:** Click any evidence modifier button to cycle cleanly through its states:
+  * **Neutral (Grey):** Evidence parameter unknown.
+  * **Included (Green):** Confirmed evidence found at the investigation site.
+  * **Excluded (Red):** Evidence definitively ruled out.
+* **⚡ Smart Impossible Combination Rule-Out:** The layout dynamically calculates potential outcomes in real-time. If choosing an unselected piece of evidence becomes mathematically impossible based on your current filters, the button will **automatically darken, cross out, and lock (disable clicking)** to prevent dead-end combinations.
+* **Responsive Layout Structure:** Adapts flawlessly to secondary monitors, overlay browser displays, mobile setups, and tablets.
+* **High Scannability Layout:** Displays behavioral unique strengths and targeted entity weakness criteria for all 23 launch and update ghosts.
+* **Dynamic Tag Highlights:** Highlights matching properties to clarify cross-checking tasks immediately.
+
+---
+
+## 📊 Covered In-Game Evidence
+
+This utility maps the exact collection of evidence parameters native to Demonology:
+1. **EMF Level 5** (EMF Reader final target indicator spike)
+2. **Handprints** (UV Blacklight structural interaction checks)
+3. **Spirit Box** (Dark room radio response capture triggers)
+4. **Ghost Orb** (Video monitor or head-mounted optics camera sweep)
+5. **Freezing Temps** (Sub-zero context breaths or thermometer logs)
+6. **Ghost Writing** (Entity interactions inside the Spirit Book log)
+7. **Laser Projector** (Visible movement captures across target light grids)
+8. **Wither** (Environmental decaying cues, specifically wilting flower assets)
+
+---
+
+## 🚀 Fast Deployment
+
+### Local Desktop Execution
+1. Download or copy the code from `index.html`.
+2. Save it on your system's local machine storage path.
+3. Double-click `index.html` to load the toolkit layout instantly in any modern internet browser.
+
+### Deploying to GitHub Pages
+1. Push `index.html` directly to a public or private GitHub repository directory.
+2. Head into your repository dashboard navigation bar: **Settings** -> **Pages**.
+3. Point your source build settings dropdown matrix link to track the `main` branch root folder.
+4. Hit save to obtain a public live web deployment URL.
+
+---
+
+## 📋 Ghost Registry Matrix Included
+
+The data array currently supports fast cross-filtering matching configurations for the full directory:
+* *Aswang, Banshee, Demon, Dullahan, Dybbuk, Entity, Ghoul, Keres, Leviathan, Nightmare, Oni, Phantom, Revenant, Shadow, Siren, Skinwalker, Specter, Spirit, The Wisp, Umbra, Vex, Wendigo, and Wraith.*
+
+---
+
+## 🤖 AI-Generated Project Details
+
+This entire project—including the core web application logic (`index.html`), responsive CSS UI frameworks, advanced three-state evaluation matrices, and this accompanying documentation—was **generated completely by Artificial Intelligence (Gemini)**.
+
+### Architectural Highlights:
+* **Zero Dependencies:** The implementation relies exclusively on clean, raw, semantic HTML5, localized CSS3 variables, and vanilla JavaScript. No external libraries, node packages, or trackers are used.
+* **Deterministic Logic:** The exclusion and impossibility engine runs instantly on client-side triggers via lightweight computational loops, ensuring no lag during frantic game situations.
+* **Optimized for In-Game Use:** Designed specifically for seamless integration as a second-monitor browser overlay, balancing low-contrast dark themes to preserve your night vision during gaming sessions.
