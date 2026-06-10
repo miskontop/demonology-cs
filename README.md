@@ -1,6 +1,6 @@
 # 🔍 Roblox Demonology Interactive Cheat Sheet
 
-An interactive, responsive single-page web utility application engineered to filter down ghost types inside the popular **Roblox horror experience: Demonology**. Heavily inspired by modern interactive Phasmophobia companion apps.
+An interactive, responsive single-page web utility application engineered to filter down ghost types inside the popular **Roblox horror experience: Demonology**. Heavily inspired by modern interactive companion tools, built directly on precise game-wiki definitions.
 
 ---
 
@@ -10,30 +10,38 @@ An interactive, responsive single-page web utility application engineered to fil
   * **Neutral (Grey):** Evidence parameter unknown.
   * **Included (Green):** Confirmed evidence found at the investigation site.
   * **Excluded (Red):** Evidence definitively ruled out.
+* **🚫 Direct Entity Exclusion:** Click the **"✕"** icon button located on any ghost card to immediately rule out that specific entity manually. This drops the card to the absolute bottom of the container layout and applies a heavy dimming mask, completely isolated from global evidence filters.
 * **⚡ Smart Impossible Combination Rule-Out:** The layout dynamically calculates potential outcomes in real-time. If choosing an unselected piece of evidence becomes mathematically impossible based on your current filters, the button will **automatically darken, cross out, and lock (disable clicking)** to prevent dead-end combinations.
-* **🏆 Confirmed Entity Isolation:** When exactly 3 pieces of evidence are selected and only 1 matching entity remains, the application automatically applies a golden **"IDENTIFIED"** badge highlight and snaps the card directly to the absolute top of the board.
-* **📌 Live Sorting Options:** Includes a toggle feature (**enabled by default**) that keeps all currently possible ghosts clustered at the top of your screen, while filtered out ghosts smoothly sink to the bottom. Turn it off to maintain strict alphabetical sorting.
-* **Responsive Layout Structure:** Adapts flawlessly to secondary monitors, overlay browser displays, mobile setups, and tablets.
+* **🐺 Skinwalker Ghost Orb Architecture:** Built with integrated handling for the Skinwalker's unique hidden mechanic. Since the Skinwalker fundamentally fakes the **Ghost Orb** signature in-game, the tracking matrix treats the Ghost Orb as an essential fourth valid parameter constraint for it.
+* **⚙️ Comprehensive Settings Dashboard:** Clicking the gear icon button exposes an elegant contextual configuration layout containing:
+  * **Float Valid Ghosts to Top:** Clear toggle option that controls whether viable target choices immediately snap to upper layout zones.
+  * **Display Mode Filtering Profiles:** Toggle between **Full Details**, **Compact View (No Descriptions)**, or **Essential View (Names Only)** on the fly.
+  * **Fixed Column Grids:** Manually lock the main card layout structure to explicit limits from 1 up to 5 columns wide (Defaults cleanly to **2 Columns** layout profile).
+  * **2-Column Clues Layout Checkbox:** Re-orient evidence button components from a strict single vertical list into an optimized grid system mapped across 2 compact columns via a simple tick-box trigger.
+  * **Shorter Clue Nomenclature Toggle:** Instantly shrinks UI evidence text strings into fast-read tactical jargon (e.g., *EMF Level 5 → EMF, Laser Projector → DOTS, Handprints → UV*).
+* **👁️ Concealed Header Visibility Trigger:** A tiny, translucent macro switch (`👁️`) is nested in the absolute top-right viewport corner. Click it to collapse or expand the main introduction layout smoothly, clearing up screen real estate instantly.
+* **✨ Animation Pipeline:** Native, GPU-accelerated CSS ease transitions track state alterations across the application, delivering buttery-smooth motion during card dimming, list rearranging, and menu sliding phases.
 
 ---
 
-## 📊 Covered In-Game Evidence
+## 📊 Covered In-Game Evidence Nomenclature
 
-This utility maps the exact collection of evidence parameters native to Demonology:
-1. **EMF Level 5** (EMF Reader final target indicator spike)
-2. **Handprints** (UV Blacklight structural interaction checks)
-3. **Spirit Box** (Dark room radio response capture triggers)
-4. **Ghost Orb** (Video monitor or head-mounted optics camera sweep)
-5. **Freezing Temps** (Sub-zero context breaths or thermometer logs)
-6. **Ghost Writing** (Entity interactions inside the Spirit Book log)
-7. **Laser Projector** (Visible movement captures across target light grids)
-8. **Wither** (Environmental decaying cues, specifically wilting flower assets)
+| Raw Parameter | Short Jargon Profile |
+| :--- | :--- |
+| **EMF Level 5** | EMF |
+| **Handprints** | UV |
+| **Spirit Box** | Spirit |
+| **Ghost Orb** | Orbs |
+| **Freezing Temps** | Temps |
+| **Ghost Writing** | Writing |
+| **Laser Projector** | **DOTS** |
+| **Wither** | Wither |
 
 ---
 
 ## 📋 Ghost Registry Matrix Included
 
-The data array currently supports fast cross-filtering matching configurations for the full directory:
+The data array supports exact wiki-verified combinations for the full roster:
 * *Aswang, Banshee, Demon, Dullahan, Dybbuk, Entity, Ghoul, Keres, Leviathan, Nightmare, Oni, Phantom, Revenant, Shadow, Siren, Skinwalker, Specter, Spirit, The Wisp, Umbra, Vex, Wendigo, and Wraith.*
 
 ---
