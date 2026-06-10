@@ -11,9 +11,9 @@ An interactive, responsive single-page web utility application engineered to fil
   * **Included (Green):** Confirmed evidence found at the investigation site.
   * **Excluded (Red):** Evidence definitively ruled out.
 * **⚡ Smart Impossible Combination Rule-Out:** The layout dynamically calculates potential outcomes in real-time. If choosing an unselected piece of evidence becomes mathematically impossible based on your current filters, the button will **automatically darken, cross out, and lock (disable clicking)** to prevent dead-end combinations.
+* **🏆 Confirmed Entity Isolation:** When exactly 3 pieces of evidence are selected and only 1 matching entity remains, the application automatically applies a golden **"IDENTIFIED"** badge highlight and snaps the card directly to the absolute top of the board.
+* **📌 Live Sorting Options:** Includes a toggle feature (**enabled by default**) that keeps all currently possible ghosts clustered at the top of your screen, while filtered out ghosts smoothly sink to the bottom. Turn it off to maintain strict alphabetical sorting.
 * **Responsive Layout Structure:** Adapts flawlessly to secondary monitors, overlay browser displays, mobile setups, and tablets.
-* **High Scannability Layout:** Displays behavioral unique strengths and targeted entity weakness criteria for all 23 launch and update ghosts.
-* **Dynamic Tag Highlights:** Highlights matching properties to clarify cross-checking tasks immediately.
 
 ---
 
@@ -55,9 +55,9 @@ The data array currently supports fast cross-filtering matching configurations f
 
 ## 🤖 AI-Generated Project Details
 
-This entire project—including the core web application logic (`index.html`), responsive CSS UI frameworks, advanced three-state evaluation matrices, and this accompanying documentation—was **generated completely by Artificial Intelligence (Gemini)**.
+This entire project—including the core web application logic (`index.html`), responsive CSS UI frameworks, advanced sorting matrices, and this accompanying documentation—was **generated completely by Artificial Intelligence (Gemini)**.
 
 ### Architectural Highlights:
 * **Zero Dependencies:** The implementation relies exclusively on clean, raw, semantic HTML5, localized CSS3 variables, and vanilla JavaScript. No external libraries, node packages, or trackers are used.
-* **Deterministic Logic:** The exclusion and impossibility engine runs instantly on client-side triggers via lightweight computational loops, ensuring no lag during frantic game situations.
+* **Deterministic Logic:** The sorting and impossibility engines execute instantly on client-side triggers via lightweight computational loops, ensuring structural consistency with zero interface lag.
 * **Optimized for In-Game Use:** Designed specifically for seamless integration as a second-monitor browser overlay, balancing low-contrast dark themes to preserve your night vision during gaming sessions.
