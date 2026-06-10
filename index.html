@@ -103,6 +103,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .evidence-btn:hover {
@@ -122,11 +123,22 @@
             background-color: var(--state-excluded);
             border-color: #f85149;
             text-decoration: line-through;
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
         .evidence-btn.excluded::after {
             content: "✕";
+        }
+
+        /* Impossible State Style */
+        .evidence-btn.impossible {
+            background-color: #12141a;
+            color: #484f58;
+            border-color: #21262d;
+            text-decoration: line-through;
+            opacity: 0.25;
+            pointer-events: none; /* Locks the button from clicks */
+            cursor: not-allowed;
         }
 
         .reset-btn {
@@ -163,227 +175,4 @@
         }
 
         .ghost-card.faded {
-            opacity: 0.15;
-            pointer-events: none;
-            transform: scale(0.98);
-        }
-
-        .ghost-name {
-            font-size: 1.4rem;
-            color: #ff7b72;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .ghost-evidence {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
-
-        .evidence-tag {
-            background-color: rgba(255, 255, 255, 0.05);
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-        }
-
-        .evidence-tag.highlight {
-            color: #58a6ff;
-            border-color: #388bfd;
-            background-color: rgba(56, 139, 253, 0.1);
-        }
-
-        .traits {
-            font-size: 0.85rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 10px;
-        }
-
-        .trait-title {
-            font-weight: bold;
-            color: var(--text-main);
-        }
-        
-        .trait-desc {
-            color: var(--text-muted);
-            margin-bottom: 5px;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>Demonology Cheat Sheet</h1>
-        <p>Interactive evidence filtering tool for the Roblox Demonology game</p>
-    </header>
-
-    <div class="container">
-        <aside class="evidence-panel">
-            <div class="panel-title">Evidence Filters</div>
-            <div class="evidence-grid">
-                <button class="evidence-btn" data-evidence="emf">EMF Level 5</button>
-                <button class="evidence-btn" data-evidence="handprints">Handprints</button>
-                <button class="evidence-btn" data-evidence="spirit_box">Spirit Box</button>
-                <button class="evidence-btn" data-evidence="ghost_orb">Ghost Orb</button>
-                <button class="evidence-btn" data-evidence="freezing">Freezing Temps</button>
-                <button class="evidence-btn" data-evidence="writing">Ghost Writing</button>
-                <button class="evidence-btn" data-evidence="projector">Laser Projector</button>
-                <button class="evidence-btn" data-evidence="wither">Wither</button>
-            </div>
-            <button class="reset-btn" id="reset-btn">Clear All Filters</button>
-        </aside>
-
-        <main class="ghost-list" id="ghost-container">
-            </main>
-    </div>
-
-    <script>
-        // Game Entity Schema Array Mapping Evidence & Context Clues
-        const ghosts = [
-            { name: "Aswang", evidence: ["emf", "handprints", "wither"], strength: "Highly aggressive in small spaces.", weakness: "Slower in well-lit areas." },
-            { name: "Banshee", evidence: ["ghost_orb", "writing", "projector"], strength: "Targets a single hunter relentlessly.", weakness: "Produces a unique cry on the microphone." },
-            { name: "Demon", evidence: ["freezing", "writing", "wither"], strength: "Extremely hostile; chains hunts rapidly regardless of energy levels.", weakness: "Crucifixes have an increased range and spin/float when burning." },
-            { name: "Dullahan", evidence: ["emf", "spirit_box", "projector"], strength: "Accelerates sharply when tracking a targeted line of sight.", weakness: "Becomes easily confused when you quickly break line of sight." },
-            { name: "Dybbuk", evidence: ["handprints", "spirit_box", "writing"], strength: "Gains speed dynamically as your team's energy drops.", weakness: "Highly active around cursed objects." },
-            { name: "Entity", evidence: ["emf", "ghost_orb", "freezing"], strength: "Can instantly teleport directly behind a random player.", weakness: "Emits a local high EMF spike immediately prior to teleporting." },
-            { name: "Ghoul", evidence: ["spirit_box", "projector", "wither"], strength: "Feasts on hunter energy values in total darkness.", weakness: "Cannot trigger radio noise variations or disable electronics." },
-            { name: "Keres", evidence: ["emf", "freezing", "projector"], strength: "Actively hunts down the player with the lowest energy score.", weakness: "Extremely predictable pathing tracking patterns." },
-            { name: "Leviathan", evidence: ["ghost_orb", "freezing", "writing"], strength: "Freezes multiple interconnected rooms simultaneously.", weakness: "Extremely heavy, loud, and slow pacing footsteps." },
-            { name: "Nightmare", evidence: ["handprints", "ghost_orb", "wither"], strength: "Drastically drops ambient darkness illumination during hunts.", weakness: "Visually disoriented for brief moments by direct flashlight beam spikes." },
-            { name: "Oni", evidence: ["emf", "handprints", "projector"], strength: "Passively sprints during hunts and manifests frequently.", weakness: "Increased manifestation rate makes capturing photos simple." },
-            { name: "Phantom", evidence: ["spirit_box", "ghost_orb", "freezing"], strength: "Flickers much slower during hunts, making observation difficult.", weakness: "Looking directly at it drains energy, but taking a photo makes it vanish." },
-            { name: "Revenant", evidence: ["handprints", "writing", "projector"], strength: "Sprints at lethal speeds when catching visual line of sight.", weakness: "Moves incredibly slowly when players are hidden out of sight." },
-            { name: "Shadow", evidence: ["emf", "writing", "wither"], strength: "Extremely shy; minimizes environmental interaction when grouped up.", weakness: "Activity completely halted by standard room lights." },
-            { name: "Siren", evidence: ["spirit_box", "ghost_orb", "wither"], strength: "Lures players using distinct directional audio tricks.", weakness: "Only produces unique feminine vocal sound cues on devices." },
-            { name: "Skinwalker", evidence: ["emf", "handprints", "freezing"], strength: "Can mimic other entity traits, behaviors, and fake Ghost Orbs.", weakness: "Leaves contrasting minor evidence clues over long periods." },
-            { name: "Specter", evidence: ["handprints", "ghost_orb", "projector"], strength: "Capable of floating cleanly through physical layout walls.", weakness: "Leaves no track marks or interaction footprints when navigating salt." },
-            { name: "Spirit", evidence: ["emf", "spirit_box", "writing"], strength: "Very unpredictable random baseline roaming shifts.", weakness: "Pacified for double the duration when using Holy Oil / Smudge kits." },
-            { name: "The Wisp", evidence: ["ghost_orb", "projector", "wither"], strength: "Highly mobile entity that moves its favorite room frequently.", weakness: "Leaves bright trails of light while navigating through Laser Projectors." },
-            { name: "Umbra", evidence: ["freezing", "projector", "wither"], strength: "Blends seamlessly into shadows, obscuring standard visual hunting cues.", weakness: "Highly sensitive to Energy Watches and high-tier lighting systems." },
-            { name: "Vex", evidence: ["emf", "spirit_box", "freezing"], strength: "Intelligently checks common player hiding spots.", weakness: "Emits a distinct metallic clicking noise while roaming." },
-            { name: "Wendigo", evidence: ["handprints", "freezing", "wither"], strength: "Enters a bloodlust state if a player dies or wanders alone.", weakness: "Emits massive growling audio tells long before a hunt begins." },
-            { name: "Wraith", evidence: ["emf", "spirit_box", "handprints"], strength: "Passively drains player energy fast just by being nearby.", weakness: "Will completely refuse to step on or disturb lines of salt." }
-        ];
-
-        // Readable name translations
-        const evidenceNames = {
-            emf: "EMF Level 5",
-            handprints: "Handprints",
-            spirit_box: "Spirit Box",
-            ghost_orb: "Ghost Orb",
-            freezing: "Freezing Temps",
-            writing: "Ghost Writing",
-            projector: "Laser Projector",
-            wither: "Wither"
-        };
-
-        // Filter states tracking storage Object
-        // 0 = Unselected Neutral, 1 = Checked Included, -1 = Crossed Excluded
-        let filterStates = { emf: 0, handprints: 0, spirit_box: 0, ghost_orb: 0, freezing: 0, writing: 0, projector: 0, wither: 0 };
-
-        const ghostContainer = document.getElementById("ghost-container");
-        const buttons = document.querySelectorAll(".evidence-btn");
-        const resetBtn = document.getElementById("reset-btn");
-
-        // Initialization Logic Engine Setup
-        function init() {
-            renderGhosts();
-            setupEventListeners();
-        }
-
-        // Render Cards View Component Layout Setup
-        function renderGhosts() {
-            ghostContainer.innerHTML = "";
-            ghosts.sort((a, b) => a.name.localeCompare(b.name)).forEach(ghost => {
-                const card = document.createElement("div");
-                card.className = "ghost-card";
-                card.id = `ghost-${ghost.name}`;
-
-                const tagsHTML = ghost.evidence.map(ev => 
-                    `<span class="evidence-tag" data-ev-tag="${ev}">${evidenceNames[ev]}</span>`
-                ).join("");
-
-                card.innerHTML = `
-                    <div class="ghost-name">${ghost.name}</div>
-                    <div class="ghost-evidence">${tagsHTML}</div>
-                    <div class="traits">
-                        <div class="trait-title">Strength:</div>
-                        <div class="trait-desc">${ghost.strength}</div>
-                        <div class="trait-title">Weakness:</div>
-                        <div class="trait-desc">${ghost.weakness}</div>
-                    </div>
-                `;
-                ghostContainer.appendChild(card);
-            });
-            applyFiltering();
-        }
-
-        // Setup User Interactive Event Triggers
-        function setupEventListeners() {
-            buttons.forEach(btn => {
-                btn.addEventListener("click", () => {
-                    const type = btn.getAttribute("data-evidence");
-                    // Toggle Cycle logic array order: 0 -> 1 -> -1 -> 0
-                    if (filterStates[type] === 0) {
-                        filterStates[type] = 1;
-                        btn.className = "evidence-btn included";
-                    } else if (filterStates[type] === 1) {
-                        filterStates[type] = -1;
-                        btn.className = "evidence-btn excluded";
-                    } else {
-                        filterStates[type] = 0;
-                        btn.className = "evidence-btn";
-                    }
-                    applyFiltering();
-                });
-            });
-
-            resetBtn.addEventListener("click", () => {
-                Object.keys(filterStates).forEach(k => filterStates[k] = 0);
-                buttons.forEach(b => b.className = "evidence-btn");
-                applyFiltering();
-            });
-        }
-
-        // Main Evaluation Matrix Filter Processing Logic
-        function applyFiltering() {
-            ghosts.forEach(ghost => {
-                let valid = true;
-
-                // Evaluate status conditions match check loops
-                for (const [evidence, state] of Object.entries(filterStates)) {
-                    if (state === 1 && !ghost.evidence.includes(evidence)) {
-                        valid = false;
-                    }
-                    if (state === -1 && ghost.evidence.includes(evidence)) {
-                        valid = false;
-                    }
-                }
-
-                const element = document.getElementById(`ghost-${ghost.name}`);
-                if (valid) {
-                    element.classList.remove("faded");
-                    // Highlight match tag lines style helper
-                    ghost.evidence.forEach(ev => {
-                        const tag = element.querySelector(`[data-ev-tag="${ev}"]`);
-                        if (filterStates[ev] === 1) {
-                            tag.classList.add("highlight");
-                        } else {
-                            tag.classList.remove("highlight");
-                        }
-                    });
-                } else {
-                    element.classList.add("faded");
-                }
-            });
-        }
-
-        // Trigger Run sequence context call
-        init();
-    </script>
-</body>
-</html>
+            opacity: 0.
